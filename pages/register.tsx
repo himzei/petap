@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { NextPage } from "next";
 import {
   Box,
   Button,
@@ -9,43 +9,27 @@ import {
   HStack,
   Input,
   Text,
-  useFocusEffect,
   VStack,
 } from "@chakra-ui/react";
-import { NextPage } from "next";
-import { SiNaver, SiReactrouter } from "react-icons/si";
+import { SiNaver } from "react-icons/si";
 import { BsFacebook } from "react-icons/bs";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { FaDog } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import useMutation from "@libs/client/useMutation";
-import { useRouter } from "next/router";
-import useUser from "@libs/client/useUser";
 
-interface EnterForm {
+export interface RegisterForm {
+  username: string;
   email: string;
   password: string;
 }
 
-const Enter: NextPage = () => {
-  const [enter, { loading, data, error }] = useMutation("/api/users/enter");
-  const [submitting, setSubmitting] = useState(false);
-  const { register, handleSubmit } = useForm<EnterForm>();
-
-  // 로그인 상태에서는 해당 페이지 안보이게
-  const router = useRouter();
-  const { user } = useUser();
-  useEffect(() => {
-    if (user && user.id) {
-      router.replace("/");
-    }
-  }, [router, user]);
-
-  const onValid = (validForm: EnterForm) => {
-    const result = enter(validForm);
-    console.log(result);
+const Register: NextPage = () => {
+  const [signUp, { loading, data, error }] = useMutation("/api/users/register");
+  const { register, handleSubmit } = useForm<RegisterForm>();
+  const onValid = (validForm: RegisterForm) => {
+    signUp(validForm);
   };
   console.log(loading, data, error);
   return (
@@ -54,7 +38,7 @@ const Enter: NextPage = () => {
         <Box>
           <FaDog size={28} />
         </Box>
-        <Heading>펫션 입장하기</Heading>
+        <Heading>펫션 회원가입</Heading>
         <VStack w="full">
           <VStack
             as="form"
@@ -64,6 +48,10 @@ const Enter: NextPage = () => {
           >
             <Text>너와 내가 함께하는 반려견 놀이터</Text>
             <FormControl>
+              <FormLabel>Username</FormLabel>
+              <Input {...register("username", { required: true })} size="sm" />
+            </FormControl>
+            <FormControl>
               <FormLabel>Email Address</FormLabel>
               <Input {...register("email", { required: true })} size="sm" />
             </FormControl>
@@ -72,7 +60,7 @@ const Enter: NextPage = () => {
               <Input {...register("password", { required: true })} size="sm" />
             </FormControl>
             <Button type="submit" colorScheme={"blue"} w="full">
-              {submitting ? "Loading..." : "로그인"}
+              회원가입
             </Button>
             <HStack>
               <Divider />
@@ -132,4 +120,4 @@ const Enter: NextPage = () => {
   );
 };
 
-export default Enter;
+export default Register;

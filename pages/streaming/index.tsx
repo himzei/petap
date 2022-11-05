@@ -14,6 +14,7 @@ interface StreamResponse {
 
 const Streams: NextPage = () => {
   const { data } = useSWR<StreamResponse>(`/api/streams?page=`);
+  console.log(data);
   return (
     <Layout hasTabBar title="라이브">
       <VStack spacing="4">

@@ -86,7 +86,7 @@ const ItemDetail: NextPage = () => {
               </Text>
               <HStack spacing={1}>
                 <Text fontSize="2xl" color="gray.900">
-                  {priceFormat(data?.product?.price)}
+                  {priceFormat(Number(data?.product?.price))}
                 </Text>
                 <Text>원</Text>
               </HStack>

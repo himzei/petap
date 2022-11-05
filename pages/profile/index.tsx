@@ -24,7 +24,9 @@ const Profile: NextPage = () => {
     <Layout hasTabBar title="나의 펫앱">
       <VStack px={4} spacing={8}>
         <HStack alignItems={"center"} mt={4} spacing={4} w="full">
-          <Avatar />
+          <Avatar
+            src={`https://imagedelivery.net/N-UcEUejRMIK2RZhJ4DnqA/${user?.avatar}/avatar`}
+          />
           <VStack alignItems={"flex-start"} spacing={0}>
             <Text fontSize={"medium"} color="gray.900">
               {user?.name}

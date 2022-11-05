@@ -10,12 +10,13 @@ import {
 } from "@chakra-ui/react";
 import Layout from "@components/layout";
 import Link from "next/link";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
+import Image from "next/image";
 
 interface ProductWithUser extends Product {
   user: User;
@@ -43,8 +44,15 @@ const ItemDetail: NextPage = () => {
   return (
     <Layout canGoBack>
       <Box p={4}>
+        <Box pb={80} position="relative">
+          <Image
+            src={`https://imagedelivery.net/N-UcEUejRMIK2RZhJ4DnqA/${data?.product.image}/public`}
+            alt="product image"
+            layout="fill"
+            objectFit="cover"
+          />
+        </Box>
         <Box mb={8}>
-          <Box h={96} bg="gray.200" />
           <HStack
             cursor={"pointer"}
             py={3}
@@ -55,7 +63,11 @@ const ItemDetail: NextPage = () => {
           >
             <Avatar
               name={`${data?.product?.user?.name}`}
-              src="https://bit.ly/tioluwani-kolawole"
+              src={
+                data?.product?.user?.avatar
+                  ? `https://imagedelivery.net/N-UcEUejRMIK2RZhJ4DnqA/${data?.product?.user?.avatar}/avatar`
+                  : "https://bit.ly/tioluwani-kolawole"
+              }
             />
             <Box>
               <Text fontSize={"sm"} color={"gray.900"} fontWeight="600">

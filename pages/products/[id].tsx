@@ -17,6 +17,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import Image from "next/image";
+import { priceFormat } from "@libs/client/utils";
 
 interface ProductWithUser extends Product {
   user: User;
@@ -83,9 +84,12 @@ const ItemDetail: NextPage = () => {
               <Text fontSize={"3xl"} fontWeight={600} color={"gray.900"}>
                 {data?.product?.name}
               </Text>
-              <Text fontSize="2xl" color="gray.900">
-                {data?.product?.price}
-              </Text>
+              <HStack spacing={1}>
+                <Text fontSize="2xl" color="gray.900">
+                  {priceFormat(data?.product?.price)}
+                </Text>
+                <Text>원</Text>
+              </HStack>
             </VStack>
             <Text my={6}>{data?.product?.description}</Text>
             <HStack

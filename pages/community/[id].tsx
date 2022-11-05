@@ -55,11 +55,14 @@ const CommunityPostDetail: NextPage = () => {
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
 
+  console.log(data);
+
   const [wonder, { loading }] = useMutation(
     `/api/posts/${router.query.id}/wonder`
   );
   const [sendAnswer, { data: answerData, loading: answerLoading }] =
     useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answer`);
+
   const onWonderClick = () => {
     if (!data) return;
     mutate(
@@ -82,6 +85,7 @@ const CommunityPostDetail: NextPage = () => {
       wonder({});
     }
   };
+
   const onValid = (form: AnswerForm) => {
     if (answerLoading) return;
     sendAnswer(form);
@@ -111,7 +115,15 @@ const CommunityPostDetail: NextPage = () => {
           동네질문
         </Text>
         <HStack mb={3} px={4} cursor="pointer" alignItems="center" spacing={3}>
-          <Avatar w={10} h={10} />
+          <Avatar
+            src={
+              data?.post?.user?.avatar
+                ? `https://imagedelivery.net/N-UcEUejRMIK2RZhJ4DnqA/${data?.post?.user?.avatar}/avatar`
+                : "https://bit.ly/tioluwani-kolawole"
+            }
+            w={10}
+            h={10}
+          />
           <Box>
             <Text fontSize="sm" fontWeight={500} color="gray.700">
               {data?.post?.user.name}
@@ -138,6 +150,7 @@ const CommunityPostDetail: NextPage = () => {
           </Text>
           <Text>{data?.post?.question}</Text>
         </HStack>
+        {/* 궁금해요 답변 아이콘 */}
         <HStack px={4} py={2} borderBottom="1px" borderColor="gray.200">
           <HStack
             as="button"
@@ -157,6 +170,7 @@ const CommunityPostDetail: NextPage = () => {
             </Text>
           </HStack>
         </HStack>
+        {/* 질문에 대한 답변 */}
         <VStack px={3} my={4} spacing={5}>
           {data?.post?.answers.map((answer) => (
             <HStack
@@ -165,7 +179,16 @@ const CommunityPostDetail: NextPage = () => {
               spacing={3}
               key={answer.id}
             >
-              <Avatar m={1.5} w={8} h={8} />
+              <Avatar
+                src={
+                  answer?.user?.avatar
+                    ? `https://imagedelivery.net/N-UcEUejRMIK2RZhJ4DnqA/${answer?.user?.avatar}/avatar`
+                    : "https://bit.ly/tioluwani-kolawole"
+                }
+                m={1.5}
+                w={8}
+                h={8}
+              />
               <VStack alignItems={"flex-start"} spacing={2}>
                 <VStack spacing={0} alignItems="flex-start">
                   <Link href={`/users/profile/${answer.id}`}>

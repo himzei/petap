@@ -8,7 +8,6 @@ import FloatingButton from "@components/floating-button";
 import { BsFillPencilFill } from "react-icons/bs";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
-import { useEffect } from "react";
 
 export interface ProductWintCount extends Product {
   _count: {
@@ -24,15 +23,13 @@ interface ProductsResponse {
 const Home: NextPage = () => {
   const { data } = useSWR<ProductsResponse>("/api/products");
 
-  useEffect(() => {}, []);
-
   return (
     <Layout title="홈" hasTabBar>
       <Head>
         <title> Home</title>
       </Head>
 
-      <VStack spacing={1} w="full" position="relative">
+      <VStack spacing={0} w="full" position="relative">
         {data?.products?.map((product) => (
           <Item
             key={product.id}
@@ -41,6 +38,8 @@ const Home: NextPage = () => {
             price={product.price}
             comments={1}
             hearts={product._count.favs}
+            image={product.image}
+            createdAt={product.createdAt}
           />
         ))}
         <FloatingButton href="/products/upload">

@@ -27,6 +27,7 @@ async function handler(
       body: { name, price, description, photoId },
       session: { user },
     } = req;
+    console.log(name, price, description, photoId, user);
     const product = await client.product.create({
       data: {
         name,

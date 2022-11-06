@@ -14,7 +14,6 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { MdOutlineRateReview } from "react-icons/md";
 
 interface CreateForm {
   name: string;
@@ -39,7 +38,7 @@ const Create: NextPage = () => {
   };
   useEffect(() => {
     if (data && data.ok) {
-      router.push(`/streams/${data.stream.id}`);
+      router.push(`/streaming/${data.stream.id}`);
     }
   });
   return (

@@ -1,4 +1,4 @@
-import { AspectRatio, Image, Text, VStack } from "@chakra-ui/react";
+import { AspectRatio, Text, VStack } from "@chakra-ui/react";
 import FloatingButton from "@components/floating-button";
 import Layout from "@components/layout";
 import { Stream } from "@prisma/client";
@@ -6,6 +6,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
 import { BsFillPencilFill } from "react-icons/bs";
+import Image from "next/image";
 
 interface StreamResponse {
   ok: boolean;
@@ -23,8 +24,8 @@ const Streams: NextPage = () => {
             <VStack pt={4} px={4} w="full" alignItems={"flex-start"}>
               <AspectRatio w="full" ratio={16 / 9}>
                 <Image
-                  src="https://bit.ly/naruto-sage"
-                  alt="naruto"
+                  src={`https://videodelivery.net/${stream.cloudflareId}/thumbnails/thumbnail.jpg?height=320`}
+                  layout="fill"
                   objectFit="cover"
                 />
               </AspectRatio>
@@ -34,7 +35,7 @@ const Streams: NextPage = () => {
             </VStack>
           </Link>
         ))}
-        <FloatingButton href="/streams/create">
+        <FloatingButton href="/streaming/create">
           <BsFillPencilFill />
         </FloatingButton>
       </VStack>

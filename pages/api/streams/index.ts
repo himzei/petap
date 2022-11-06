@@ -16,7 +16,7 @@ async function handler(
     const {
       result: {
         uid,
-        rtpms: { streamKey, url },
+        rtmps: { streamKey, url },
       },
     } = await (
       await fetch(
@@ -24,14 +24,14 @@ async function handler(
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.CF_STREAM_TOKEN}`,
           },
           body: `{"meta": {"name":"${name}"},"recording": { "mode": "automatic", "timeoutSeconds": 10}}`,
         }
       )
     ).json();
-    console.log(response);
+    console.log(uid, streamKey, url);
+
     const stream = await client.stream.create({
       data: {
         cloudflareId: uid,

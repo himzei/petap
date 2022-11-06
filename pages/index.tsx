@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { VStack } from "@chakra-ui/react";
 import Item from "@components/item";
-import useUser from "@libs/client/useUser";
 import Layout from "@components/layout";
 import Head from "next/head";
 import FloatingButton from "@components/floating-button";

@@ -14,9 +14,8 @@ import useMutation from "@libs/client/useMutation";
 import useUser from "@libs/client/useUser";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Stream } from "stream";
+import { Stream } from "@prisma/client";
 import useSWR from "swr";
 
 interface StreamMessage {
@@ -83,12 +82,14 @@ const Streaming: NextPage = () => {
   return (
     <Layout canGoBack>
       <VStack py={10} px={4} w="full" alignItems={"flex-start"}>
-        <AspectRatio w="full" ratio={1}>
-          <iframe
-            title="naruto"
-            src="https://www.youtube.com/embed/QhBnZ6NPOY0"
-            allowFullScreen
-          />
+        <AspectRatio w="full" ratio={16 / 9}>
+          {data?.stream.cloudflareId ? (
+            <iframe
+              src={`https://iframe.videodelivery.net/${data?.stream.cloudflareId}`}
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowFullScreen
+            />
+          ) : null}
         </AspectRatio>
         <VStack mt={5} alignItems="flex-start">
           <Text fontSize="3xl" fontWeight={"bold"} mt={3} color="gray.900">
@@ -100,6 +101,11 @@ const Streaming: NextPage = () => {
           <Text my={6} color="gray.700">
             {data?.stream?.description}
           </Text>
+        </VStack>
+        <VStack alignItems={"flex-start"}>
+          <Text>Stream Keys (secret)</Text>
+          <Text>{data?.stream?.cloudflareUrl}</Text>
+          <Text>{data?.stream?.cloudflareKey}</Text>
         </VStack>
         <Box w="full">
           <Text fontSize="2xl" fontWeight="bold" color="gray.900">

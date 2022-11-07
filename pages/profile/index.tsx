@@ -19,7 +19,9 @@ interface ReviewsResponse {
 
 const Profile: NextPage = () => {
   const { user } = useUser();
-  const { data } = useSWR<ReviewsResponse>("/api/reviews");
+  const { data } = useSWR<ReviewsResponse>(
+    typeof window === "undefined" ? null : "/api/reviews"
+  );
   return (
     <Layout hasTabBar title="나의 펫앱">
       <VStack px={4} spacing={8}>

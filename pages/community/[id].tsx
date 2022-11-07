@@ -45,7 +45,7 @@ interface AnswerForm {
 
 interface AnswerResponse {
   ok: boolean;
-  response: Answer;
+  answer: Answer;
 }
 
 const CommunityPostDetail: NextPage = () => {
@@ -55,14 +55,13 @@ const CommunityPostDetail: NextPage = () => {
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
 
-  console.log(data);
-
   const [wonder, { loading }] = useMutation(
     `/api/posts/${router.query.id}/wonder`
   );
   const [sendAnswer, { data: answerData, loading: answerLoading }] =
-    useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answer`);
+    useMutation(`/api/posts/${router.query.id}/answer`);
 
+  console.log("hello", answerData);
   const onWonderClick = () => {
     if (!data) return;
     mutate(
